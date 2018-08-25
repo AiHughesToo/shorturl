@@ -89,6 +89,7 @@
 <p>Track popular and trending links with daily, weekly, monthly and yearly most linked to sites.&nbsp;</p>
 <p>Details page for links that show graphs for number of visits over time as well as other information we can make available about the links use.</p>
 <p>Generated link should be highlighted for you for easier copying or include a button to copy to clipboard.</p>
+<p>Update the base URL in the forms with an environmental variable that can be set in a yaml file.</p>
 </li>
 </ul>
 </li>
