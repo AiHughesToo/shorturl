@@ -9,7 +9,8 @@ task :clean_url_links => environment do
 
     if link.main_url[0...5] == 'https'
       secure = true
-      else secure = false
+    else
+      secure = false
     end
     url = URI.parse(link.main_url)
     req = Net::HTTP.new(url.host, url.port)

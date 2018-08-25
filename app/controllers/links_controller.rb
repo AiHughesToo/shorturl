@@ -7,10 +7,6 @@ class LinksController < ApplicationController
     @link = Link.new
   end
 
-  # # GET /links/1
-  # # GET /links/1.json
-  # def show
-  # end
 
   def send_to_long_url
     @link = Link.find_by(short_url: params[:short_url].downcase)
