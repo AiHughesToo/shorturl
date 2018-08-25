@@ -1,4 +1,5 @@
 <%= form_with(model: link, local: true) do |form| %>
+    <h3> Enter a link in the field below to generate a shortened link for sharing.</h3>
   <% if link.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(link.errors.count, "error") %> prohibited this link from being saved:</h2>
@@ -16,12 +17,8 @@
     <%= form.text_field :main_url, id: :link_main_url %>
   </div>
 
-  <div class="field">
-    <%= form.label :short_url %>
-    <%= form.text_field :short_url, id: :link_short_url %>
-  </div>
-
   <div class="actions">
     <%= form.submit %>
   </div>
 <% end %>
+<p id="notice"><%= notice %></p>

@@ -4,7 +4,7 @@ class LinksController < ApplicationController
   # GET /links
   # GET /links.json
   def index
-    @links = Link.all
+    @link = Link.new
   end
 
   # GET /links/1
@@ -39,6 +39,7 @@ class LinksController < ApplicationController
   # POST /links
   # POST /links.json
   def create
+
     @link = Link.new(link_params)
 
     # lets go make that short url
@@ -46,7 +47,7 @@ class LinksController < ApplicationController
 
     respond_to do |format|
       if @link.save
-        format.html { redirect_to @link, notice: 'Link was successfully created.' }
+        format.html { redirect_to links_url, notice: 'Congrats your new link is: localhost:3000/' + @link.short_url }
         format.json { render :show, status: :created, location: @link }
       else
         format.html { render :new }
