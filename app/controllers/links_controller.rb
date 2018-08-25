@@ -13,7 +13,7 @@ class LinksController < ApplicationController
   # end
 
   def send_to_long_url
-    @link = Link.find_by(short_url: params[:short_url])
+    @link = Link.find_by(short_url: params[:short_url].downcase)
     # make sure the link it in the db
     if @link
       # looks like it is so send user on his way
