@@ -51,7 +51,6 @@ class LinksController < ApplicationController
       @link = Link.new(link_params)
       # lets go make that short url
       @link.gen_short_url
-
       respond_to do |format|
         if @link.save
           format.html { redirect_to links_url, notice: 'Congrats your new link is: localhost:3000/' + @link.short_url }
