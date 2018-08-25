@@ -1,5 +1,5 @@
 class LinksController < ApplicationController
-  before_action :set_link, only: [:show, :edit, :update, :destroy]
+  before_action :set_link, only: [:show, :destroy]
 
   # GET /links
   # GET /links.json
@@ -10,6 +10,20 @@ class LinksController < ApplicationController
   # GET /links/1
   # GET /links/1.json
   def show
+  end
+
+  def send_to_long_url
+    @link = Link.find_by(short_url: params[:short_url])
+    # make sure the link it in the db
+    if @link
+      # looks like it is so send user on his way
+      redirect_to @link.main_url
+    end
+    # looks like there may be an issue
+    respond_to do |format|
+      format.html { redirect_to links_url, notice: 'That link was no good. Please check your info and try again.' }
+      format.json { head :no_content }
+    end
   end
 
   # GET /links/new
@@ -26,6 +40,9 @@ class LinksController < ApplicationController
   def create
     @link = Link.new(link_params)
 
+    # lets go make that short url
+    @link.gen_short_url
+
     respond_to do |format|
       if @link.save
         format.html { redirect_to @link, notice: 'Link was successfully created.' }
@@ -37,19 +54,6 @@ class LinksController < ApplicationController
     end
   end
 
-  # # PATCH/PUT /links/1
-  # # PATCH/PUT /links/1.json
-  # def update
-  #   respond_to do |format|
-  #     if @link.update(link_params)
-  #       format.html { redirect_to @link, notice: 'Link was successfully updated.' }
-  #       format.json { render :show, status: :ok, location: @link }
-  #     else
-  #       format.html { render :edit }
-  #       format.json { render json: @link.errors, status: :unprocessable_entity }
-  #     end
-  #   end
-  # end
 
   # DELETE /links/1
   # DELETE /links/1.json
