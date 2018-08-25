@@ -18,11 +18,12 @@ class LinksController < ApplicationController
     if @link
       # looks like it is so send user on his way
       redirect_to @link.main_url
-    end
-    # looks like there may be an issue
-    respond_to do |format|
-      format.html { redirect_to links_url, notice: 'That link was no good. Please check your info and try again.' }
-      format.json { head :no_content }
+    else
+      # looks like there may be an issue
+      respond_to do |format|
+        format.html { redirect_to links_url, notice: 'That link was no good. Please check your info and try again.' }
+        format.json { head :no_content }
+      end
     end
   end
 
