@@ -32,26 +32,34 @@ class LinksController < ApplicationController
     @link = Link.new
   end
 
-  # GET /links/1/edit
-  def edit
-  end
+  # # GET /links/1/edit
+  # def edit
+  # end
 
   # POST /links
   # POST /links.json
   def create
+    # quick way to gard against empty main url
+    # full production version will need to check for a certain format.
+    if params[:link][:main_url].empty?
 
-    @link = Link.new(link_params)
+      respond_to do |format|
+        format.html { redirect_to links_url, notice: 'Looks like you forgot to give us a URL to link to.' }
+        format.json { head :no_content }
+      end
+    else
+      @link = Link.new(link_params)
+      # lets go make that short url
+      @link.gen_short_url
 
-    # lets go make that short url
-    @link.gen_short_url
-
-    respond_to do |format|
-      if @link.save
-        format.html { redirect_to links_url, notice: 'Congrats your new link is: localhost:3000/' + @link.short_url }
-        format.json { render :show, status: :created, location: @link }
-      else
-        format.html { render :new }
-        format.json { render json: @link.errors, status: :unprocessable_entity }
+      respond_to do |format|
+        if @link.save
+          format.html { redirect_to links_url, notice: 'Congrats your new link is: localhost:3000/' + @link.short_url }
+          format.json { render :show, status: :created, location: @link }
+        else
+          format.html { render :new }
+          format.json { render json: @link.errors, status: :unprocessable_entity }
+        end
       end
     end
   end
